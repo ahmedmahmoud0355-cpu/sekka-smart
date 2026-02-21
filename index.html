@@ -3,175 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>سِكّة ألتيميت | أحمد محمود</title>
+    <title>سِكّة سمارت | SEKKA SMART</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --pink: #ff007f; --green: #00ff88; --danger: #ff3e3e; --gold: #ffd700; --bg: #0a0b10; }
+        :root { --main: #00f7ff; --green: #00ff88; --danger: #ff3e3e; --gold: #ffd700; --bg: #0a0b10; --panel: #161b22; }
+        
         body { font-family: 'Cairo', sans-serif; background: var(--bg); color: white; margin: 0; padding: 0; overflow-x: hidden; }
 
-        /* شاشة التسجيل الذكية */
-        #loginOverlay { position: fixed; inset: 0; background: #0a0b10; z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; }
-        .login-card { background: #161b22; padding: 30px; border-radius: 20px; border: 1px solid var(--green); width: 100%; max-width: 400px; text-align: center; }
-        .login-card input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #000; color: #fff; text-align: center; box-sizing: border-box; }
-        .btn-start { background: var(--green); color: #000; font-weight: bold; border: none; padding: 12px 30px; border-radius: 10px; cursor: pointer; width: 100%; }
+        /* شاشة تسجيل الدخول */
+        #loginOverlay { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .login-box { background: var(--panel); padding: 30px; border-radius: 25px; border: 1px solid var(--main); width: 100%; max-width: 400px; text-align: center; box-shadow: 0 0 20px rgba(0,247,255,0.2); }
+        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 12px; border: 1px solid #333; background: #000; color: #fff; text-align: center; font-family: 'Cairo'; }
 
-        /* الهيدر */
-        header { background: #161b22; padding: 10px 20px; border-bottom: 2px solid var(--green); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 18px; font-weight: 900; color: var(--green); }
+        header { background: var(--panel); padding: 12px 20px; border-bottom: 2px solid var(--main); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 20px; font-weight: 900; color: var(--main); }
 
-        /* الحاوية الرئيسية المستجيبة */
-        .main-app { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 10px; 
-            padding: 10px; 
-            box-sizing: border-box;
-        }
+        /* التقسيم الرئيسي */
+        .main-app { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 15px; box-sizing: border-box; }
+        @media (min-width: 992px) { .main-app { grid-template-columns: 350px 1fr 380px; height: calc(100vh - 70px); } }
 
-        @media (min-width: 992px) {
-            .main-app { grid-template-columns: 320px 1fr 350px; height: calc(100vh - 65px); }
-        }
+        .panel { background: var(--panel); border-radius: 25px; border: 1px solid #30363d; display: flex; flex-direction: column; overflow: hidden; }
+        .panel-h { background: #21262d; padding: 12px; font-weight: bold; text-align: center; border-bottom: 1px solid #30363d; color: var(--main); }
 
-        .panel { background: #161b22; border-radius: 20px; border: 1px solid #30363d; display: flex; flex-direction: column; overflow: hidden; }
+        /* جروب السائقين */
+        .chat-area { flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; max-height: 250px; }
+        @media (min-width: 992px) { .chat-area { max-height: none; } }
+        .chat-msg { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 15px; border-right: 3px solid var(--green); font-size: 13px; }
+        .chat-msg b { color: var(--green); display: block; }
 
         /* الخريطة */
-        .map-box { height: 300px; position: relative; }
+        .map-box { position: relative; border-radius: 25px; overflow: hidden; border: 1px solid var(--main); height: 300px; }
         @media (min-width: 992px) { .map-box { height: auto; } }
-        iframe { width: 100%; height: 100%; border: none; filter: brightness(0.7) contrast(1.2); }
+        iframe { width: 100%; height: 100%; border: none; filter: brightness(0.8) contrast(1.2) invert(90%) hue-rotate(180deg); }
 
-        /* المميزات */
-        .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; }
-        .feature-card { background: #0d1117; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #333; cursor: pointer; font-size: 12px; }
-        .feature-card i { font-size: 20px; margin-bottom: 5px; }
-        .pink-active { background: var(--pink) !important; color: white !important; }
-
-        .security-log { background: #000; margin: 10px; padding: 10px; border-radius: 10px; font-family: monospace; font-size: 11px; color: #0f0; height: 150px; overflow-y: auto; border: 1px solid #222; }
-        @media (min-width: 992px) { .security-log { flex-grow: 1; height: auto; } }
-
-        .btn-sos { background: var(--danger); color: white; padding: 12px; border: none; border-radius: 10px; font-weight: bold; width: calc(100% - 20px); margin: 0 10px 10px 10px; cursor: pointer; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-    </style>
-</head>
-<body onload="checkFirstTime()">
-
-<div id="loginOverlay">
-    <div class="login-card">
-        <i class="fas fa-user-circle" style="font-size: 50px; color: var(--green); margin-bottom: 15px;"></i>
-        <h3>تسجيل الدخول للنظام</h3>
-        <input type="text" id="userName" placeholder="الاسم كامل">
-        <input type="text" id="userPhone" placeholder="رقم الموبايل (11 رقم)" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-        <button class="btn-start" onclick="saveData()">ابدأ الآن</button>
-        <p id="error" style="color: var(--danger); font-size: 12px; margin-top: 10px; display: none;">تأكد من الاسم ورقم الموبايل (11 رقم)</p>
-    </div>
-</div>
-
-<header>
-    <div class="logo"><i class="fas fa-route"></i> سِكّة | SEKKA</div>
-    <div id="clock" style="color: var(--gold); font-size: 12px;"></div>
-</header>
-
-<div class="main-app">
-    <div class="panel">
-        <div style="background: #21262d; padding: 10px; font-weight: bold; text-align: center; font-size: 14px;">🚀 المميزات</div>
-        <div class="features-grid">
-            <div class="feature-card" id="pinkBtn" onclick="togglePinkMode()" style="color: var(--pink); border-color: var(--pink);">
-                <i class="fas fa-venus"></i><br>رادار السيدات
-            </div>
-            <div class="feature-card" onclick="startQRGuard()" style="color: var(--green); border-color: var(--green);">
-                <i class="fas fa-qrcode"></i><br>حماية QR
-            </div>
-            <div class="feature-card" style="color: var(--gold); border-color: var(--gold);">
-                <i class="fas fa-gas-pump"></i><br>التموين
-            </div>
-            <div class="feature-card" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i><br>تغيير الحساب
-            </div>
-        </div>
-        <button class="btn-sos" onclick="triggerSOS()">SOS طوارئ</button>
-    </div>
-
-    <div class="panel map-box">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d109407.24059030807!2d31.3320299!3d31.0409483!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f79db7a9053547%3A0xf8dab3bbed766efb!2z2KfZhNmF2YbYtdmI2LHYqeKArA!5e0!3m2!1sar!2seg!4v1715880000000!5m2!1sar!2seg"></iframe>
-        <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 5px 12px; border-radius: 50px; border: 1px solid var(--green); font-size: 10px;">
-            <i class="fas fa-satellite"></i> <span id="welcomeMsg">GPS Active</span>
-        </div>
-    </div>
-
-    <div class="panel">
-        <div style="background: #a00; padding: 10px; font-weight: bold; text-align: center; font-size: 14px;">🕵️ سجل الرقابة</div>
-        <div class="security-log" id="secLog">
-            [SYSTEM] مرحباً بك في سكة...<br>
-        </div>
-        <div style="padding: 10px; border-top: 1px solid #333; font-size: 12px;">
-            <i class="fas fa-robot" style="color: var(--gold);"></i> AI: <span id="aiStatus">النظام مستعد</span>
-        </div>
-    </div>
-</div>
-
-<script>
-    // 1. فحص هل المستخدم مسجل قبل كدة؟
-    function checkFirstTime() {
-        const name = localStorage.getItem("sk_name");
-        if (name) {
-            document.getElementById("welcomeMsg").innerText = "أهلاً، " + name;
-            addLog("تم استعادة جلسة المستخدم: " + name);
-        } else {
-            document.getElementById("loginOverlay").style.display = "flex";
-        }
-        updateClock();
-    }
-
-    // 2. حفظ البيانات والتحقق (Validation)
-    function saveData() {
-        const name = document.getElementById("userName").value.trim();
-        const phone = document.getElementById("userPhone").value.trim();
-        const error = document.getElementById("error");
-
-        // الاسم لازم يكون موجود والموبايل لازم 11 رقم بالضبط
-        if (name.length > 3 && phone.length === 11) {
-            localStorage.setItem("sk_name", name);
-            localStorage.setItem("sk_phone", phone);
-            location.reload(); // ريفريش عشان يفتح البرنامج
-        } else {
-            error.style.display = "block";
-        }
-    }
-
-    function addLog(msg) {
-        const log = document.getElementById("secLog");
-        log.innerHTML += `[${new Date().toLocaleTimeString('ar-EG')}] ${msg}<br>`;
-        log.scrollTop = log.scrollHeight;
-    }
-
-    function updateClock() {
-        setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString('ar-EG');
-        }, 1000);
-    }
-
-    function togglePinkMode() {
-        const btn = document.getElementById('pinkBtn');
-        btn.classList.toggle('pink-active');
-        addLog(btn.classList.contains('pink-active') ? "تفعيل وضع السيدات" : "إيقاف وضع السيدات");
-    }
-
-    function startQRGuard() {
-        const plate = prompt("ادخل رقم لوحة المركبة:");
-        if(plate) addLog("بدء تتبع المركبة: " + plate);
-    }
-
-    function triggerSOS() {
-        addLog("🚨 استغاثة SOS صامتة أرسلت للمدير!");
-        alert("تم إرسال استغاثة طوارئ لأحمد محمود.");
-    }
-
-    function logout() {
-        if(confirm("هل تريد تسجيل الخروج ومسح البيانات؟")) {
-            localStorage.clear();
-            location.reload();
-        }
-    }
-</script>
-</body>
-</html>
+        /* الذكاء الاصطناعي والميكروفون */
+        .ai-box { padding: 15px; background: rgba(0, 247, 255, 0.03); }
+        .mic-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: var(--main
