@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>سِكّة سمارت | SEKKA SMART</title>
+    <title>سِكّة سمارت | SEKKA SMART - أحمد محمود</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -13,30 +13,54 @@
 
         /* شاشة تسجيل الدخول */
         #loginOverlay { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; }
-        .login-box { background: var(--panel); padding: 30px; border-radius: 25px; border: 1px solid var(--main); width: 100%; max-width: 400px; text-align: center; box-shadow: 0 0 20px rgba(0,247,255,0.2); }
-        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 12px; border: 1px solid #333; background: #000; color: #fff; text-align: center; font-family: 'Cairo'; }
+        .login-box { background: var(--panel); padding: 30px; border-radius: 25px; border: 1px solid var(--main); width: 100%; max-width: 400px; text-align: center; box-shadow: 0 0 30px rgba(0,247,255,0.15); }
+        .login-box input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid #333; background: #000; color: #fff; text-align: center; font-family: 'Cairo'; font-size: 16px; box-sizing: border-box; }
 
-        header { background: var(--panel); padding: 12px 20px; border-bottom: 2px solid var(--main); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 20px; font-weight: 900; color: var(--main); }
+        /* الهيدر */
+        header { background: var(--panel); padding: 12px 20px; border-bottom: 2px solid var(--main); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; height: 60px; box-sizing: border-box; }
+        .logo { font-size: 18px; font-weight: 900; color: var(--main); }
 
-        /* التقسيم الرئيسي */
-        .main-app { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 15px; box-sizing: border-box; }
-        @media (min-width: 992px) { .main-app { grid-template-columns: 350px 1fr 380px; height: calc(100vh - 70px); } }
+        /* التخطيط الرئيسي - مستجيب */
+        .main-app { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            padding: 10px; 
+            box-sizing: border-box; 
+        }
 
-        .panel { background: var(--panel); border-radius: 25px; border: 1px solid #30363d; display: flex; flex-direction: column; overflow: hidden; }
-        .panel-h { background: #21262d; padding: 12px; font-weight: bold; text-align: center; border-bottom: 1px solid #30363d; color: var(--main); }
+        /* للشاشات الكبيرة (اللاب توب) */
+        @media (min-width: 992px) {
+            .main-app { 
+                display: grid;
+                grid-template-columns: 320px 1fr 350px; 
+                height: calc(100vh - 60px); 
+                padding: 15px;
+            }
+        }
+
+        .panel { background: var(--panel); border-radius: 20px; border: 1px solid #30363d; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .panel-h { background: #21262d; padding: 12px; font-weight: bold; text-align: center; border-bottom: 1px solid #30363d; color: var(--main); font-size: 14px; }
 
         /* جروب السائقين */
-        .chat-area { flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; max-height: 250px; }
-        @media (min-width: 992px) { .chat-area { max-height: none; } }
+        .chat-area { flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; height: 200px; }
+        @media (min-width: 992px) { .chat-area { height: auto; } }
         .chat-msg { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 15px; border-right: 3px solid var(--green); font-size: 13px; }
-        .chat-msg b { color: var(--green); display: block; }
+        .chat-msg b { color: var(--green); display: block; margin-bottom: 3px; }
 
         /* الخريطة */
-        .map-box { position: relative; border-radius: 25px; overflow: hidden; border: 1px solid var(--main); height: 300px; }
+        .map-box { position: relative; border-radius: 20px; overflow: hidden; border: 1px solid var(--main); height: 250px; width: 100%; }
         @media (min-width: 992px) { .map-box { height: auto; } }
         iframe { width: 100%; height: 100%; border: none; filter: brightness(0.8) contrast(1.2) invert(90%) hue-rotate(180deg); }
 
-        /* الذكاء الاصطناعي والميكروفون */
-        .ai-box { padding: 15px; background: rgba(0, 247, 255, 0.03); }
-        .mic-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: var(--main
+        /* السجل */
+        .log-box { background: #000; margin: 10px; padding: 12px; border-radius: 12px; font-family: monospace; font-size: 10px; color: var(--green); height: 100px; overflow-y: auto; border: 1px solid #222; }
+        @media (min-width: 992px) { .log-box { flex-grow: 1; height: auto; } }
+
+        /* الأزرار والمدخلات */
+        .input-style { background: #000; border: 1px solid #333; padding: 10px; border-radius: 10px; color: white; width: 100%; box-sizing: border-box; font-family: 'Cairo'; font-size: 13px; }
+        .btn-action { background: var(--main); color: #000; border: none; padding: 12px; border-radius: 12px; font-weight: 900; cursor: pointer; width: 100%; transition: 0.3s; }
+        .btn-action:active { transform: scale(0.95); }
+
+        /* AI Section */
+        .ai-section { padding: 12px; background: rgba(0, 247, 255, 0.05); border-top: 1px solid #
